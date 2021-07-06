@@ -5,6 +5,8 @@ const MainCtrl = require("./controllers/MainCtrl").MainCtrl;
 var args = process.argv.slice(2);
 
 if (args[0] == '--nocron'){
+  let dt = new Date;
+  console.log(dt.toString());
   MainCtrl.getPrices();
   process.exit();
 }
