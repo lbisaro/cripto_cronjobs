@@ -3,12 +3,15 @@ const { db } = require("./util");
 const MainCtrl = require("./controllers/MainCtrl").MainCtrl;
 
 var args = process.argv.slice(2);
+const main = async() => {
+  await MainCtrl.getPrices();
+  process.exit();
+}
 
 if (args[0] == '--nocron'){
   let dt = new Date;
   console.log(dt.toString());
-  MainCtrl.getPrices();
-  process.exit();
+  main();  
 }
 else{
   /*
