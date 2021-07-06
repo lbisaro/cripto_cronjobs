@@ -1,0 +1,27 @@
+{
+  "name": "cripto_cronjobs",
+  "version": "1.0.0",
+  "description": "Proyecto Cripto - Tareas de Cron para obtencion y calculo de valores de las monedas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Leonardo Bisaro",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.29.1",
+    "mongoose": "^5.13.0",
+    "node-binance-api": "^0.12.5",
+    "node-cron": "^3.0.0",
+    "technicalindicators": "^3.1.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lbisaro/cripto_cronjobs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lbisaro/cripto_cronjobs/issues"
+  },
+  "homepage": "https://github.com/lbisaro/cripto_cronjobs#readme"
+}
