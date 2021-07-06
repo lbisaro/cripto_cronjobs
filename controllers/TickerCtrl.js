@@ -196,7 +196,21 @@ class TickerCtrl {
               
             }
 
-            //Eliminar prices(1m, 5m, 15m y 1H) anteriores a 200 periodos
+            //Eliminar prices(1m, 5m, 15m y 1h) anteriores a 200 periodos
+            while (tiker.prices_1m.length>200) {
+              tiker.prices_1m.shift();
+            }
+            while (tiker.prices_5m.length>200) {
+              tiker.prices_5m.shift();
+            }
+            while (tiker.prices_15m.length>200) {
+              tiker.prices_15m.shift();
+            }
+            while (tiker.prices_1h.length>200) {
+              tiker.prices_1h.shift();
+            }
+            
+            
             await tiker.save();    
             q++;      
           }
