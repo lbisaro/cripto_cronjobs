@@ -49,6 +49,21 @@ class TickerCtrl {
             let reviewStart=0;
             let period=0;
 
+            //MA 200 (Solo para 1 hora)-------------------------------------------------------------------------
+            //https://runkit.com/anandaravindan/sma
+            const SMA = require('technicalindicators').SMA
+ 
+            period = 200;
+            if (tiker.prices_1h.length >= period) {
+              reviewStart = tiker.prices_1h.length-period;
+              let values = [];
+              for (j=reviewStart; j<(reviewStart+period); j++) {
+                values.push(tiker.prices_1h[j].price);
+              }
+              ind_val = SMA.calculate({period : period, values : values})[0].toFixed(tikerDecs);
+              tiker.prices_1h[(tiker.prices_1h.length-1)].ind_ma200 = ind_val;
+            }
+
             //EMA 7 y 14 ---------------------------------------------------------------------------------------
             //https://runkit.com/anandaravindan/ema
             const EMA = require('technicalindicators').EMA; 

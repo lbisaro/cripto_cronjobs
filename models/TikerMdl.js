@@ -38,6 +38,7 @@ const TikerSchema = new Schema({
     prices_1h:  [{_id : false, 
                   dt: Number , 
                   price: Number,
+                  ind_ma200: Number,
                   ind_ema7: Number,
                   ind_ema14: Number,
                   ind_bb_u: Number,
