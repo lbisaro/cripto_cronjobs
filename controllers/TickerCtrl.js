@@ -224,7 +224,15 @@ class TickerCtrl {
             while (tiker.prices_1h.length>200) {
               tiker.prices_1h.shift();
             }
-            
+
+            //Actualizando porcentajes de cambio respecto al periodo anteriores
+            //=((ultimo/anterior)-1)*100
+
+            tiker.perc_1m = (((tiker.prices_1m[tiker.prices_1m.length-2].price/tiker.prices_1m[tiker.prices_1m.length-1].price)-1)*100).toFixed(2);
+            tiker.perc_5m = (((tiker.prices_5m[tiker.prices_5m.length-2].price/tiker.prices_5m[tiker.prices_5m.length-1].price)-1)*100).toFixed(2);
+            tiker.perc_15m = (((tiker.prices_15m[tiker.prices_15m.length-2].price/tiker.prices_15m[tiker.prices_15m.length-1].price)-1)*100).toFixed(2);
+            tiker.perc_1h = (((tiker.prices_1h[tiker.prices_1h.length-2].price/tiker.prices_1h[tiker.prices_1h.length-1].price)-1)*100).toFixed(2);
+
             
             await tiker.save();    
             q++;      

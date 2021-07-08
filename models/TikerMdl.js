@@ -4,10 +4,13 @@ const { Schema } = mongoose;
 
 const TikerSchema = new Schema({
     _id: String,
-    origin: String,
-    price: Number,
     created: Number,
     updated: Number,
+    price: Number,
+    perc_1m: Number,
+    perc_5m: Number,
+    perc_15m: Number,
+    perc_1h: Number,
     prices_1m:  [{_id : false, 
                   dt: Number , 
                   price: Number,
