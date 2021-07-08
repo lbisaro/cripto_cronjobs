@@ -13,7 +13,7 @@ class TickerCtrl {
         for(let i=0; i< tikersId.length; i++){
           let tikerId = tikersId[i];
 
-          //Update Tiker
+          //Update Tiker -------------------------------------------------------------------------
           if (tikerId.substr(-4)=='USDT' && tikerId.substr(-8)!='DOWNUSDT' && tikerId.substr(-6)!='UPUSDT' ) {
             let tiker = await Tiker.findById(tikerId);
             if (!tiker) 
@@ -24,7 +24,7 @@ class TickerCtrl {
             }
             prices[tikerId] = Number(prices[tikerId]).toString(); //Quita los 0 de mas en los decimales
 
-            //Averiguando la cantidad de decimales de la moneda
+            //Averiguando la cantidad de decimales de la moneda -------------------------------------------------------------------------
             var tikerDecs = (prices[tikerId].split('.')[1]?prices[tikerId].split('.')[1].length:1);
             
             tiker.updated = dateToTicker;
@@ -39,11 +39,9 @@ class TickerCtrl {
             if (updMin == '00' ) {
               tiker.prices_1h.push({dt: dateToTicker, price: prices[tikerId]});
             }
-            await tiker.save();
-
-
+            
           
-            //Calcular indicadores
+            //Calcular indicadores -------------------------------------------------------------------------
             let ind_val = 0;
             let j=0;
             let reviewStart=0;
@@ -225,14 +223,18 @@ class TickerCtrl {
               tiker.prices_1h.shift();
             }
 
-            //Actualizando porcentajes de cambio respecto al periodo anteriores
-            //=((ultimo/anterior)-1)*100
+            //Actualizando porcentajes
+            //Ref =((ultimo/anterior)-1)*100
 
-            tiker.perc_1m = (((tiker.prices_1m[tiker.prices_1m.length-2].price/tiker.prices_1m[tiker.prices_1m.length-1].price)-1)*100).toFixed(2);
-            tiker.perc_5m = (((tiker.prices_5m[tiker.prices_5m.length-2].price/tiker.prices_5m[tiker.prices_5m.length-1].price)-1)*100).toFixed(2);
-            tiker.perc_15m = (((tiker.prices_15m[tiker.prices_15m.length-2].price/tiker.prices_15m[tiker.prices_15m.length-1].price)-1)*100).toFixed(2);
-            tiker.perc_1h = (((tiker.prices_1h[tiker.prices_1h.length-2].price/tiker.prices_1h[tiker.prices_1h.length-1].price)-1)*100).toFixed(2);
+            //Cambio respecto al periodo anteriores
+            tiker.perc_1m =  ( ( ( tiker.prices_1m[tiker.prices_1m.length-2].price   / tiker.prices_1m[tiker.prices_1m.length-1].price   ) -1 ) * 100 ).toFixed(2);
+            tiker.perc_5m =  ( ( ( tiker.prices_5m[tiker.prices_5m.length-2].price   / tiker.prices_5m[tiker.prices_5m.length-1].price   ) -1 ) * 100 ).toFixed(2);
+            tiker.perc_15m = ( ( ( tiker.prices_15m[tiker.prices_15m.length-2].price / tiker.prices_15m[tiker.prices_15m.length-1].price ) -1 ) * 100 ).toFixed(2);
+            tiker.perc_1h =  ( ( ( tiker.prices_1h[tiker.prices_1h.length-2].price   / tiker.prices_1h[tiker.prices_1h.length-1].price   ) -1 ) * 100 ).toFixed(2);
 
+            //Precio actual respecto a la ma200
+            if (tiker.prices_1h[(tiker.prices_1h.length-1)].ind_ma200)
+              tiker.perc_price_vs_ma200 = ( ( ( tiker.prices_1h[(tiker.prices_1h.length-1)].ind_ma200   / tiker.price   ) -1 ) * 100 ).toFixed(2);
             
             await tiker.save();    
             q++;      

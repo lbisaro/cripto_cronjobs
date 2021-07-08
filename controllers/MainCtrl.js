@@ -16,7 +16,7 @@ class MainCtrl {
         let prices = await binance.prices();
         let q = await TickerCtrl.updatePrices(prices);
         console.log('Prices updated: ',q);
-      
+        
         
     }
 }

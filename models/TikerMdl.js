@@ -11,6 +11,7 @@ const TikerSchema = new Schema({
     perc_5m: Number,
     perc_15m: Number,
     perc_1h: Number,
+    perc_price_vs_ma200: Number,
     prices_1m:  [{_id : false, 
                   dt: Number , 
                   price: Number,
