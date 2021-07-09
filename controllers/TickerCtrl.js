@@ -227,13 +227,19 @@ class TickerCtrl {
             //Ref =((ultimo/anterior)-1)*100
 
             //Cambio respecto al periodo anteriores
-            tiker.perc_1m =  ( ( ( tiker.prices_1m[tiker.prices_1m.length-2].price   / tiker.prices_1m[tiker.prices_1m.length-1].price   ) -1 ) * 100 ).toFixed(2);
-            tiker.perc_5m =  ( ( ( tiker.prices_5m[tiker.prices_5m.length-2].price   / tiker.prices_5m[tiker.prices_5m.length-1].price   ) -1 ) * 100 ).toFixed(2);
-            tiker.perc_15m = ( ( ( tiker.prices_15m[tiker.prices_15m.length-2].price / tiker.prices_15m[tiker.prices_15m.length-1].price ) -1 ) * 100 ).toFixed(2);
-            tiker.perc_1h =  ( ( ( tiker.prices_1h[tiker.prices_1h.length-2].price   / tiker.prices_1h[tiker.prices_1h.length-1].price   ) -1 ) * 100 ).toFixed(2);
+            if (tiker.prices_1m.length>1)
+              tiker.perc_1m =  ( ( ( tiker.prices_1m[tiker.prices_1m.length-1].price   / tiker.prices_1m[tiker.prices_1m.length-2].price   ) -1 ) * 100 ).toFixed(2);
+            if (tiker.prices_1m.length>3)
+              tiker.perc_3m =  ( ( ( tiker.prices_1m[tiker.prices_1m.length-1].price   / tiker.prices_1m[tiker.prices_1m.length-4].price   ) -1 ) * 100 ).toFixed(2);
+            if (tiker.prices_5m.length>1)
+              tiker.perc_5m =  ( ( ( tiker.prices_5m[tiker.prices_5m.length-1].price   / tiker.prices_5m[tiker.prices_5m.length-2].price   ) -1 ) * 100 ).toFixed(2);
+            if (tiker.prices_15m.length>1)
+              tiker.perc_15m = ( ( ( tiker.prices_15m[tiker.prices_15m.length-1].price / tiker.prices_15m[tiker.prices_15m.length-2].price ) -1 ) * 100 ).toFixed(2);
+            if (tiker.prices_1h.length>1)
+              tiker.perc_1h =  ( ( ( tiker.prices_1h[tiker.prices_1h.length-1].price   / tiker.prices_1h[tiker.prices_1h.length-2].price   ) -1 ) * 100 ).toFixed(2);
 
             //Precio actual respecto a la ma200
-            if (tiker.prices_1h[(tiker.prices_1h.length-1)].ind_ma200)
+            if (tiker.prices_1h.length>0 && tiker.prices_1h[(tiker.prices_1h.length-1)].ind_ma200)
               tiker.perc_price_vs_ma200 = ( ( ( tiker.prices_1h[(tiker.prices_1h.length-1)].ind_ma200   / tiker.price   ) -1 ) * 100 ).toFixed(2);
             
             await tiker.save();    
