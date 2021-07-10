@@ -12,10 +12,33 @@ class MainCtrl {
         APISECRET: '<secret>'
         }*/);
         const TickerCtrl = require("./TickerCtrl").TickerCtrl;
+        
+        //Generando el Log
+        const Log = require('../models/LogMdl');
+        const logDocId = Log.getDocId();
+        let log = await Log.findById(logDocId);
+        if (!log) 
+        {
+            log = await new Log({_id: logDocId});
+        }
+        const logStart = Log.getLogTime();
+        log.daily.push({start: logStart});
+        await log.save();
 
+        //Actualizando precios
         let prices = await binance.prices();
-        let q = await TickerCtrl.updatePrices(prices);
-        console.log('Prices updated: ',q);
+        let updated = await TickerCtrl.updatePrices(prices);
+        console.log('Prices updated: ',updated);
+
+        //Finalizando log
+        const logEnd = Log.getLogTime();
+        const diffLast = Log.compareLast(log._id+''+logStart);
+        log.daily[log.daily.length-1].end = logEnd;
+        log.daily[log.daily.length-1].tikersUpdated = updated.tikersUpdated;
+        log.daily[log.daily.length-1].diffLast = diffLast;
+        await log.save();
+
+
         
         
     }

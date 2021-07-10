@@ -1,5 +1,6 @@
 const cron = require('node-cron');
-const { db } = require("./util");
+require('./database');
+
 const MainCtrl = require("./controllers/MainCtrl").MainCtrl;
 
 /**

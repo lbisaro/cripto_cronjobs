@@ -4,7 +4,7 @@
   "description": "Proyecto Cripto - Tareas de Cron para obtencion y calculo de valores de las monedas",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./index.js"
   },
   "author": "Leonardo Bisaro",
   "license": "ISC",
@@ -16,7 +16,7 @@
     "technicalindicators": "^3.1.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.9"
+    "nodemon": "^2.0.11"
   },
   "repository": {
     "type": "git",

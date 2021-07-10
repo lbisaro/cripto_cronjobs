@@ -4,8 +4,8 @@ class TickerCtrl {
         const Tiker = require('../models/TikerMdl');
       
         //Obteniendo Fecha y hora del update para los precios
-        let dateToTicker = await Tiker.getTickerDateTime();
-        let updMin = dateToTicker.substr(-2);
+        let dateToTiker = await Tiker.getTickerDateTime();
+        let updMin = dateToTiker.substr(-2);
 
         //Registrando los precios obtenidos
         let tikersId = Object.keys(prices);
@@ -19,25 +19,25 @@ class TickerCtrl {
             if (!tiker) 
             {
               tiker = await new Tiker({_id: tikerId, 
-                created: dateToTicker
-               });
+                                      created: dateToTiker
+              });
             }
             prices[tikerId] = Number(prices[tikerId]).toString(); //Quita los 0 de mas en los decimales
 
             //Averiguando la cantidad de decimales de la moneda -------------------------------------------------------------------------
             var tikerDecs = (prices[tikerId].split('.')[1]?prices[tikerId].split('.')[1].length:1);
             
-            tiker.updated = dateToTicker;
+            tiker.updated = dateToTiker;
             tiker.price = prices[tikerId];
-            tiker.prices_1m.push({dt: dateToTicker, price: prices[tikerId]});
+            tiker.prices_1m.push({dt: dateToTiker, price: prices[tikerId]});
             if (updMin.substr(-1) == '0' || updMin.substr(-1) == '5') {  
-              tiker.prices_5m.push({dt: dateToTicker, price: prices[tikerId]});
+              tiker.prices_5m.push({dt: dateToTiker, price: prices[tikerId]});
             }
             if (updMin == '00' || updMin == '15' || updMin == '30' || updMin == '45') {
-              tiker.prices_15m.push({dt: dateToTicker, price: prices[tikerId]});
+              tiker.prices_15m.push({dt: dateToTiker, price: prices[tikerId]});
             }
             if (updMin == '00' ) {
-              tiker.prices_1h.push({dt: dateToTicker, price: prices[tikerId]});
+              tiker.prices_1h.push({dt: dateToTiker, price: prices[tikerId]});
             }
             
           
@@ -246,8 +246,9 @@ class TickerCtrl {
             q++;      
           }
       }
-      return {dateToTicker: dateToTicker,
-              tickersUpdated: q
+      
+      return {dateToTiker: dateToTiker,
+              tikersUpdated: q
             };
    };
 }
