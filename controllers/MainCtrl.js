@@ -32,10 +32,13 @@ class MainCtrl {
 
         //Finalizando log
         const logEnd = Log.getLogTime();
-        const diffLast = Log.compareLast(log._id+''+logStart);
+        if (log.daily.length>1)
+        {
+            const diffLast = Log.compareLast(log._id+''+log.daily[log.daily.length-2].start);
+            log.daily[log.daily.length-1].diffLast = (diffLast=='a minute ago'?'OK':diffLast);
+        }
         log.daily[log.daily.length-1].end = logEnd;
         log.daily[log.daily.length-1].tikersUpdated = updated.tikersUpdated;
-        log.daily[log.daily.length-1].diffLast = diffLast;
         await log.save();
 
 
