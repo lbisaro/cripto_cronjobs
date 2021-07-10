@@ -242,13 +242,9 @@ class TickerCtrl {
             if (tiker.prices_1h.length>0 && tiker.prices_1h[(tiker.prices_1h.length-1)].ind_ma200)
               tiker.perc_price_vs_ma200 = ( ( ( tiker.prices_1h[(tiker.prices_1h.length-1)].ind_ma200   / tiker.price   ) -1 ) * 100 ).toFixed(2);
             await tiker.save();    
-console.log('post-save',tikerId,q);
             q++;      
           }
       }
-console.log('post-for',q);
-	console.log(dateToTiker);
-console.log(q);
       
       return {dateToTiker: dateToTiker,
               tikersUpdated: q
