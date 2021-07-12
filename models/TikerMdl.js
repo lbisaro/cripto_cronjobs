@@ -13,6 +13,10 @@ const TikerSchema = new Schema({
     perc_15m: Number,
     perc_1h: Number,
     perc_price_vs_ma200: Number,
+    flag_1m_ema: String, //'u' Alcista, 'd' Bajista 
+    flag_1m_ema_change: String,
+    flag_1m_bb: String, //'o' Precio Arriba, 'b' Precio Abajo, 'i' Precio dentro
+    flag_1m_bb_change: String,
     prices_1m:  [{_id : false, 
                   dt: Number , 
                   price: Number,

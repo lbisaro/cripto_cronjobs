@@ -1,4 +1,3 @@
-
 class TickerCtrl {
     static async updatePrices(prices) { 
         const Tiker = require('../models/TikerMdl');
@@ -241,6 +240,33 @@ class TickerCtrl {
             //Precio actual respecto a la ma200
             if (tiker.prices_1h.length>0 && tiker.prices_1h[(tiker.prices_1h.length-1)].ind_ma200)
               tiker.perc_price_vs_ma200 = ( ( ( tiker.prices_1h[(tiker.prices_1h.length-1)].ind_ma200   / tiker.price   ) -1 ) * 100 ).toFixed(2);
+            
+            //Actualizando Flags ---------------------------------------------------------------------
+            let aux = '';
+            
+            //EMA 1m
+            aux = 'u';
+            if (tiker.prices_1m[(tiker.prices_1m.length-1)].ind_ema7 < tiker.prices_1m[(tiker.prices_1m.length-1)].ind_ema14) 
+              aux = 'd';
+
+            if (tiker.flag_1m_ema != aux ) {
+              tiker.flag_1m_ema = aux;
+              tiker.flag_1m_ema_change = dateToTiker;
+            }
+            
+            //BB 1m
+            aux = 'i'; //inner
+            if (tiker.price > tiker.prices_1m[(tiker.prices_1m.length-1)].ind_bb_u) 
+              aux = 'o'; //Over
+            else if (tiker.price < tiker.prices_1m[(tiker.prices_1m.length-1)].ind_bb_l) 
+              aux = 'b'; //Below
+
+            if (tiker.flag_1m_ema != aux ) {
+              tiker.flag_1m_bb = aux;
+              tiker.flag_1m_bb_change = dateToTiker;
+            }
+
+
             await tiker.save();    
             q++;      
           }
