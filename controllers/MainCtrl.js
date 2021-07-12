@@ -11,7 +11,7 @@ class MainCtrl {
         APIKEY: '<key>',
         APISECRET: '<secret>'
         }*/);
-        const TickerCtrl = require("./TickerCtrl").TickerCtrl;
+        const TickerCtrl = require("./TikerCtrl").TickerCtrl;
         
         //Generando el Log
         const Log = require('../models/LogMdl');
@@ -38,7 +38,7 @@ class MainCtrl {
             log.daily[log.daily.length-1].diffLast = (diffLast=='a minute ago'?'OK':diffLast);
         }
         log.daily[log.daily.length-1].end = logEnd;
-        log.daily[log.daily.length-1].tikersUpdated = updated.tikersUpdated;
+        log.daily[log.daily.length-1].tickersUpdated = updated.tickersUpdated;
         await log.save();
 
 
