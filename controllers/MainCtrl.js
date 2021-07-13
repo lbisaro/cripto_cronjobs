@@ -1,4 +1,6 @@
 const Binance = require('node-binance-api');
+var TickerCtrl = require("./TickerCtrl").TickerCtrl;
+var Log = require('../models/LogMdl');
 
 class MainCtrl {
     static async getPrices() {
@@ -11,10 +13,9 @@ class MainCtrl {
         APIKEY: '<key>',
         APISECRET: '<secret>'
         }*/);
-        const TickerCtrl = require("./TickerCtrl").TickerCtrl;
+        
         
         //Generando el Log
-        const Log = require('../models/LogMdl');
         const logDocId = Log.getDocId();
         let log = await Log.findById(logDocId);
         if (!log) 

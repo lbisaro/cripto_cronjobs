@@ -1,6 +1,8 @@
+var Ticker = require('../models/TickerMdl');
+var ticker;
 class TickerCtrl {
     static async updatePrices(prices) { 
-        const Ticker = require('../models/TickerMdl');
+        
       
         //Obteniendo Fecha y hora del update para los precios
         let dateToTicker = await Ticker.getTickerDateTime();
@@ -14,7 +16,7 @@ class TickerCtrl {
 
           //Update Ticker -------------------------------------------------------------------------
           if (tickerId.substr(-4)=='USDT' && tickerId.substr(-8)!='DOWNUSDT' && tickerId.substr(-6)!='UPUSDT' ) {
-            let ticker = await Ticker.findById(tickerId);
+            ticker = await Ticker.findById(tickerId);
             if (!ticker) 
             {
               ticker = await new Ticker({_id: tickerId, 

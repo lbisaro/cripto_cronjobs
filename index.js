@@ -22,9 +22,9 @@ const main = async() => {
   await MainCtrl.getPrices();
   process.exit();
 }
- 
+var dt;
 if (args[0] == '--nocron'){
-  let dt = new Date;
+  dt = new Date;
   console.log(dt.toString());
   main();  
 }
@@ -34,7 +34,7 @@ else {
    * (Al final de cada minuto para tener casi el ultimo precio)
    */
   cron.schedule("55 * * * * *", () => {
-    let dt = new Date;
+    dt = new Date;
     console.log(dt.toString());
     MainCtrl.getPrices();
   });
