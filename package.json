@@ -4,7 +4,8 @@
   "description": "Proyecto Cripto - Tareas de Cron para obtencion y calculo de valores de las monedas",
   "main": "index.js",
   "scripts": {
-    "start": "node ./index.js"
+    "start": "node ./index.js",
+    "nocron": "node ./index.js --nocron >> cripto.log"
   },
   "author": "Leonardo Bisaro",
   "license": "ISC",
