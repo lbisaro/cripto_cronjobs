@@ -11,7 +11,7 @@ class MainCtrl {
         APIKEY: '<key>',
         APISECRET: '<secret>'
         }*/);
-        const TickerCtrl = require("./TikerCtrl").TickerCtrl;
+        const TickerCtrl = require("./TickerCtrl").TickerCtrl;
         
         //Generando el Log
         const Log = require('../models/LogMdl');

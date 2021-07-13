@@ -1,10 +1,10 @@
 class TickerCtrl {
     static async updatePrices(prices) { 
-        const Tiker = require('../models/TikerMdl');
+        const Ticker = require('../models/TickerMdl');
       
         //Obteniendo Fecha y hora del update para los precios
-        let dateToTiker = await Tiker.getTickerDateTime();
-        let updMin = dateToTiker.substr(-2);
+        let dateToTicker = await Ticker.getTickerDateTime();
+        let updMin = dateToTicker.substr(-2);
 
         //Registrando los precios obtenidos
         let tickersId = Object.keys(prices);
@@ -12,13 +12,13 @@ class TickerCtrl {
         for(let i=0; i< tickersId.length; i++){
           let tickerId = tickersId[i];
 
-          //Update Tiker -------------------------------------------------------------------------
+          //Update Ticker -------------------------------------------------------------------------
           if (tickerId.substr(-4)=='USDT' && tickerId.substr(-8)!='DOWNUSDT' && tickerId.substr(-6)!='UPUSDT' ) {
-            let ticker = await Tiker.findById(tickerId);
+            let ticker = await Ticker.findById(tickerId);
             if (!ticker) 
             {
-              ticker = await new Tiker({_id: tickerId, 
-                                      created: dateToTiker
+              ticker = await new Ticker({_id: tickerId, 
+                                      created: dateToTicker
               });
             }
             prices[tickerId] = Number(prices[tickerId]).toString(); //Quita los 0 de mas en los decimales
@@ -26,17 +26,17 @@ class TickerCtrl {
             //Averiguando la cantidad de decimales de la moneda -------------------------------------------------------------------------
             var tickerDecs = (prices[tickerId].split('.')[1]?prices[tickerId].split('.')[1].length:1);
             
-            ticker.updated = dateToTiker;
+            ticker.updated = dateToTicker;
             ticker.price = prices[tickerId];
-            ticker.prices_1m.push({dt: dateToTiker, price: prices[tickerId]});
+            ticker.prices_1m.push({dt: dateToTicker, price: prices[tickerId]});
             if (updMin.substr(-1) == '0' || updMin.substr(-1) == '5') {  
-              ticker.prices_5m.push({dt: dateToTiker, price: prices[tickerId]});
+              ticker.prices_5m.push({dt: dateToTicker, price: prices[tickerId]});
             }
             if (updMin == '00' || updMin == '15' || updMin == '30' || updMin == '45') {
-              ticker.prices_15m.push({dt: dateToTiker, price: prices[tickerId]});
+              ticker.prices_15m.push({dt: dateToTicker, price: prices[tickerId]});
             }
             if (updMin == '00' ) {
-              ticker.prices_1h.push({dt: dateToTiker, price: prices[tickerId]});
+              ticker.prices_1h.push({dt: dateToTicker, price: prices[tickerId]});
             }
             
           
@@ -251,7 +251,7 @@ class TickerCtrl {
 
             if (ticker.flag_1m_ema != aux ) {
               ticker.flag_1m_ema = aux;
-              ticker.flag_1m_ema_change = dateToTiker;
+              ticker.flag_1m_ema_change = dateToTicker;
             }
             
             //BB 1m
@@ -263,7 +263,7 @@ class TickerCtrl {
 
             if (ticker.flag_1m_ema != aux ) {
               ticker.flag_1m_bb = aux;
-              ticker.flag_1m_bb_change = dateToTiker;
+              ticker.flag_1m_bb_change = dateToTicker;
             }
 
 
@@ -272,7 +272,7 @@ class TickerCtrl {
           }
       }
       
-      return {dateToTiker: dateToTiker,
+      return {dateToTicker: dateToTicker,
               tickersUpdated: q
             };
    };
