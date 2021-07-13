@@ -39,6 +39,10 @@ class MainCtrl {
         }
         log.daily[log.daily.length-1].end = logEnd;
         log.daily[log.daily.length-1].tickersUpdated = updated.tickersUpdated;
+
+        const used = process.memoryUsage().heapUsed / 1024 / 1024;
+        log.daily[log.daily.length-1].memory = `Used ${Math.round(used * 100) / 100} MB`;
+
         await log.save();
 
 

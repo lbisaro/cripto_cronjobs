@@ -8,7 +8,8 @@ const LogSchema = new Schema({
               start: String , 
               diffLast: String,
               end: String,
-              tickersUpdated: Number
+              tickersUpdated: Number,
+              memory: String
             }]
 });
 
