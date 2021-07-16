@@ -14,6 +14,10 @@ class TickerCtrl {
         let dateToTicker = await Ticker.getTickerDateTime();
         let updMin = dateToTicker.substr(-2);
 
+        const fs = require('fs');
+        const filename = 'crontab.log';
+        fs.appendFile(filename, "\n"+new Date().toLocaleTimeString()+' start Ticker - '+dateToTicker+"\n",function (err) {});
+
         //Registrando los precios obtenidos
         let tickersId = Object.keys(prices);
         let q=0;
@@ -267,12 +271,15 @@ class TickerCtrl {
               ticker.flag_1m_bb = aux;
               ticker.flag_1m_bb_change = dateToTicker;
             }
-
             await ticker.save();    
             q++;      
+            fs.appendFile(filename, q+' ',function (err) {});
+            
+
           }
       }
-      
+      fs.appendFile(filename, "\n"+'Total: '+q,function (err) {});
+      fs.appendFile(filename, "\n"+new Date().toLocaleTimeString()+'<-END',function (err) {});
       return {dateToTicker: dateToTicker,
               tickersUpdated: q
             };
