@@ -15,7 +15,7 @@ class TickerCtrl {
         let updMin = dateToTicker.substr(-2);
 
         const fs = require('fs');
-        const filename = 'crontab.log';
+        const filename = '../crontab.log';
         fs.appendFile(filename, "\n"+new Date().toLocaleTimeString()+' start Ticker - '+dateToTicker+"\n",function (err) {});
 
         //Registrando los precios obtenidos
