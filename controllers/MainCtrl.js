@@ -47,7 +47,7 @@ class MainCtrl {
         await log.save();
 
         await Log.deleteMany({_id:{$lt:logDocId}});
-
+        /*
         const https = require('http');
         const options = {
           hostname: '127.0.0.1',
@@ -68,8 +68,9 @@ class MainCtrl {
           console.error(error);
         });
 
+
         req.end();
-        
+        */
         
     }
 }
