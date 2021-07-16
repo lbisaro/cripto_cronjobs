@@ -46,7 +46,29 @@ class MainCtrl {
 
         await log.save();
 
+        await Log.deleteMany({_id:{$lt:logDocId}});
 
+        const https = require('http');
+        const options = {
+          hostname: '127.0.0.1',
+          port: 3000,
+          path: '/dbUpdated',
+          method: 'GET'
+        };
+
+        const req = https.request(options, res => {
+          console.log(`statusCode: ${res.statusCode}`);
+
+          res.on('data', d => {
+            //OK
+          })
+        });
+
+        req.on('error', error => {
+          console.error(error);
+        });
+
+        req.end();
         
         
     }

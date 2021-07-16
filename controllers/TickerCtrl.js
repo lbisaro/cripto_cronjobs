@@ -1,8 +1,14 @@
-var Ticker = require('../models/TickerMdl');
-var ticker;
 class TickerCtrl {
     static async updatePrices(prices) { 
-        
+        var Ticker = require('../models/TickerMdl');
+        var ticker;
+
+        //https://runkit.com/anandaravindan/sma
+        const SMA = require('technicalindicators').SMA
+        //https://runkit.com/anandaravindan/ema
+        const EMA = require('technicalindicators').EMA; 
+        //https://runkit.com/anandaravindan/bb
+        const BB = require('technicalindicators').BollingerBands; 
       
         //Obteniendo Fecha y hora del update para los precios
         let dateToTicker = await Ticker.getTickerDateTime();
@@ -13,7 +19,6 @@ class TickerCtrl {
         let q=0;
         for(let i=0; i< tickersId.length; i++){
           let tickerId = tickersId[i];
-
           //Update Ticker -------------------------------------------------------------------------
           if (tickerId.substr(-4)=='USDT' && tickerId.substr(-8)!='DOWNUSDT' && tickerId.substr(-6)!='UPUSDT' ) {
             ticker = await Ticker.findById(tickerId);
@@ -49,8 +54,6 @@ class TickerCtrl {
             let period=0;
 
             //MA 200 (Solo para 1 hora)-------------------------------------------------------------------------
-            //https://runkit.com/anandaravindan/sma
-            const SMA = require('technicalindicators').SMA
  
             period = 200;
             if (ticker.prices_1h.length >= period) {
@@ -64,8 +67,6 @@ class TickerCtrl {
             }
 
             //EMA 7 y 14 ---------------------------------------------------------------------------------------
-            //https://runkit.com/anandaravindan/ema
-            const EMA = require('technicalindicators').EMA; 
 
             period = 7;
             if (ticker.prices_1m.length >= period) {
@@ -157,7 +158,6 @@ class TickerCtrl {
             }
             
             //BOLLINGER (20,2) ---------------------------------------------------------------------------------
-            const BB = require('technicalindicators').BollingerBands; //https://runkit.com/anandaravindan/bb
 
             period = 20;
 
@@ -267,7 +267,6 @@ class TickerCtrl {
               ticker.flag_1m_bb = aux;
               ticker.flag_1m_bb_change = dateToTicker;
             }
-
 
             await ticker.save();    
             q++;      
