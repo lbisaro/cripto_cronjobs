@@ -20,6 +20,15 @@ const MainCtrl = require("./controllers/MainCtrl").MainCtrl;
 var args = process.argv.slice(2);
 const main = async() => {
   await MainCtrl.getPrices();
+  const fs = require('fs');
+
+  fs.appendFile("process.log", " pre-exit ", (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+
+
   process.exit();
 }
 var dt;
