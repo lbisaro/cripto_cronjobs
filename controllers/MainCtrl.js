@@ -1,6 +1,7 @@
 const Binance = require('node-binance-api');
 var TickerCtrl = require("./TickerCtrl").TickerCtrl;
 var Log = require('../models/LogMdl');
+const fs = require('fs');
 
 class MainCtrl {
     static async getPrices() {
@@ -13,8 +14,7 @@ class MainCtrl {
         APIKEY: '<key>',
         APISECRET: '<secret>'
         }*/);
-        
-        
+
         //Generando el Log
         const logDocId = Log.getDocId();
         let log = await Log.findById(logDocId);
@@ -31,6 +31,12 @@ class MainCtrl {
         let updated = await TickerCtrl.updatePrices(prices);
         console.log('Prices updated: ',updated);
 
+fs.appendFile("process.log", "\n"+updated.dateToTicker, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+
         //Finalizando log
         const logEnd = Log.getLogTime();
         if (log.daily.length>1)
@@ -41,8 +47,8 @@ class MainCtrl {
         log.daily[log.daily.length-1].end = logEnd;
         log.daily[log.daily.length-1].tickersUpdated = updated.tickersUpdated;
 
-        const used = process.memoryUsage().heapUsed / 1024 / 1024;
-        log.daily[log.daily.length-1].memory = `Used ${Math.round(used * 100) / 100} MB`;
+        //const used = process.memoryUsage().heapUsed / 1024 / 1024;
+        //log.daily[log.daily.length-1].memory = `Used ${Math.round(used * 100) / 100} MB`;
 
         await log.save();
 
