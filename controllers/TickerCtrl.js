@@ -46,7 +46,7 @@ class TickerCtrl {
               ticker.prices_1h.push({dt: dateToTicker, price: prices[tickerId]});
             }
             
-/*          
+          
             //Calcular indicadores -------------------------------------------------------------------------
             let ind_val = 0;
             let j=0;
@@ -209,7 +209,7 @@ class TickerCtrl {
               ticker.prices_1h[(ticker.prices_1h.length-1)].ind_bb_l = ind_val[0].lower.toFixed(tickerDecs);
               
             }
-*/
+
             //Eliminar prices(1m, 5m, 15m y 1h) anteriores a 200 periodos
             while (ticker.prices_1m.length>200) {
               ticker.prices_1m.shift();
@@ -243,7 +243,7 @@ class TickerCtrl {
             if (ticker.prices_1h.length>0 && ticker.prices_1h[(ticker.prices_1h.length-1)].ind_ma200)
               ticker.perc_price_vs_ma200 = ( ( ( ticker.prices_1h[(ticker.prices_1h.length-1)].ind_ma200   / ticker.price   ) -1 ) * 100 ).toFixed(2);
             
-            /*
+            
             //Actualizando Flags ---------------------------------------------------------------------
             let aux = '';
             
@@ -268,9 +268,9 @@ class TickerCtrl {
               ticker.flag_1m_bb = aux;
               ticker.flag_1m_bb_change = dateToTicker;
             }
-            */
-
             
+
+
             await ticker.save();    
             q++;      
           }
