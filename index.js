@@ -16,19 +16,11 @@ const MainCtrl = require("./controllers/MainCtrl").MainCtrl;
  * En el server de produccion, configurar el cron para que ejecute con el argumento --nocron
  * 
  */
+const fs = require('fs');
 
 var args = process.argv.slice(2);
 const main = async() => {
   await MainCtrl.getPrices();
-  const fs = require('fs');
-
-  fs.appendFile("process.log", " pre-exit ", (err) => {
-          if (err) {
-            console.log(err);
-          }
-        });
-
-
   process.exit();
 }
 var dt;
