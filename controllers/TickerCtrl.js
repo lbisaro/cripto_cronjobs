@@ -1,7 +1,5 @@
 class TickerCtrl {
     static async updatePrices(prices) { 
-        const fs = require('fs');
-
         var Ticker = require('../models/TickerMdl');
         var ticker;
 
@@ -15,12 +13,6 @@ class TickerCtrl {
         //Obteniendo Fecha y hora del update para los precios
         let dateToTicker = await Ticker.getTickerDateTime();
         let updMin = dateToTicker.substr(-2);
-
-fs.appendFile("process.log", "\n"+dateToTicker+" ", (err) => {
-          if (err) {
-            console.log(err);
-          }
-        });
 
         //Registrando los precios obtenidos
         let tickersId = Object.keys(prices);
@@ -54,7 +46,7 @@ fs.appendFile("process.log", "\n"+dateToTicker+" ", (err) => {
               ticker.prices_1h.push({dt: dateToTicker, price: prices[tickerId]});
             }
             
-          
+/*          
             //Calcular indicadores -------------------------------------------------------------------------
             let ind_val = 0;
             let j=0;
@@ -217,7 +209,7 @@ fs.appendFile("process.log", "\n"+dateToTicker+" ", (err) => {
               ticker.prices_1h[(ticker.prices_1h.length-1)].ind_bb_l = ind_val[0].lower.toFixed(tickerDecs);
               
             }
-
+*/
             //Eliminar prices(1m, 5m, 15m y 1h) anteriores a 200 periodos
             while (ticker.prices_1m.length>200) {
               ticker.prices_1m.shift();
@@ -253,6 +245,7 @@ fs.appendFile("process.log", "\n"+dateToTicker+" ", (err) => {
             
             
             //Actualizando Flags ---------------------------------------------------------------------
+/*
             let aux = '';
             
             //EMA 1m
@@ -276,24 +269,13 @@ fs.appendFile("process.log", "\n"+dateToTicker+" ", (err) => {
               ticker.flag_1m_bb = aux;
               ticker.flag_1m_bb_change = dateToTicker;
             }
-            
-fs.appendFile("process.log", " "+q+" ", (err) => {
-          if (err) {
-            console.log(err);
-          }
-        });
-
-
+*/            
             await ticker.save();    
             q++;      
           }
 
       }
-      fs.appendFile("process.log", "\n"+" END: "+q+" ", (err) => {
-          if (err) {
-            console.log(err);
-          }
-        });
+
       return {dateToTicker: dateToTicker,
               tickersUpdated: q
             };
