@@ -1,5 +1,7 @@
 class TickerCtrl {
     static async updatePrices(prices) { 
+        const fs = require('fs');
+
         var Ticker = require('../models/TickerMdl');
         var ticker;
 
@@ -13,6 +15,12 @@ class TickerCtrl {
         //Obteniendo Fecha y hora del update para los precios
         let dateToTicker = await Ticker.getTickerDateTime();
         let updMin = dateToTicker.substr(-2);
+
+fs.appendFile("process.log", "\n"+dateToTicker+" ", (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
 
         //Registrando los precios obtenidos
         let tickersId = Object.keys(prices);
@@ -269,12 +277,23 @@ class TickerCtrl {
               ticker.flag_1m_bb_change = dateToTicker;
             }
             
+fs.appendFile("process.log", " "+q+" ", (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
 
 
             await ticker.save();    
             q++;      
           }
+
       }
+      fs.appendFile("process.log", "\n"+" END: "+q+" ", (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
       return {dateToTicker: dateToTicker,
               tickersUpdated: q
             };

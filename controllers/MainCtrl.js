@@ -1,7 +1,6 @@
 const Binance = require('node-binance-api');
 var TickerCtrl = require("./TickerCtrl").TickerCtrl;
 var Log = require('../models/LogMdl');
-const fs = require('fs');
 
 class MainCtrl {
     static async getPrices() {
@@ -30,12 +29,6 @@ class MainCtrl {
         let prices = await binance.prices();
         let updated = await TickerCtrl.updatePrices(prices);
         console.log('Prices updated: ',updated);
-
-fs.appendFile("process.log", "\n"+updated.dateToTicker, (err) => {
-          if (err) {
-            console.log(err);
-          }
-        });
 
         //Finalizando log
         const logEnd = Log.getLogTime();
