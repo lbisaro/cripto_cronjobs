@@ -58,7 +58,7 @@ const TickerSchema = new Schema({
 
 TickerSchema.statics.getTickerDateTime = function() { 
     //Definiendo el ID (Relacionado al momento en que se obtienen los precios)
-    const dateToIdForPrice = moment().format('YYYYMMDDHHmm');
+    const dateToIdForPrice = moment().subtract(1, 'minute').format('YYYYMMDDHHmm');
     return dateToIdForPrice; 
 };
 
